@@ -1,4 +1,4 @@
-package spring5_component_scan_study.spring;
+package spring5_component_scan_study;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +8,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import spring5_component_scan_study.config.AppCtx;
+import spring5_component_scan_study.spring.ChangePasswordService;
+import spring5_component_scan_study.spring.DuplicateMemberException;
+import spring5_component_scan_study.spring.MemberInfoPrinter;
+import spring5_component_scan_study.spring.MemberListPrinter;
+import spring5_component_scan_study.spring.MemberNotfoundException;
+import spring5_component_scan_study.spring.MemberRegisterService;
+import spring5_component_scan_study.spring.RegisterRequest;
+import spring5_component_scan_study.spring.VersionPrinter;
+import spring5_component_scan_study.spring.WrongIdPasswordException;
 
 public class MainForSpring {
 	private static ApplicationContext ctx = null;
@@ -53,12 +62,12 @@ public class MainForSpring {
 			return;
 		}
 		
-		MemberInfoPrinter infoPrinter = ctx.getBean("infoPrinter", MemberInfoPrinter.class);
+		MemberInfoPrinter infoPrinter = ctx.getBean(MemberInfoPrinter.class);
 		infoPrinter.printMemberInfo(arg[1]);
 	}
 
 	private static void processListCommand() {
-		MemberListPrinter listPrinter = ctx.getBean("memberListPrinter", MemberListPrinter.class);
+		MemberListPrinter listPrinter = ctx.getBean(MemberListPrinter.class);
 		listPrinter.printAll();
 	}
 
@@ -68,7 +77,7 @@ public class MainForSpring {
 			return;
 		}
 
-		ChangePasswordService changePwdSvc = ctx.getBean("changePwdSvc", ChangePasswordService.class);
+		ChangePasswordService changePwdSvc = ctx.getBean(ChangePasswordService.class);
 		try {
 			changePwdSvc.changePassword(arg[1], arg[2], arg[3]);
 			System.out.println("암호를 변경했습니다. \n");
@@ -84,7 +93,7 @@ public class MainForSpring {
 			printHelp();
 			return;
 		}
-		MemberRegisterService regSvc = ctx.getBean("memberRegSvc", MemberRegisterService.class);
+		MemberRegisterService regSvc = ctx.getBean(MemberRegisterService.class);
 		RegisterRequest req = new RegisterRequest();
 		req.setEmail(arg[1]);
 		req.setName(arg[2]);
